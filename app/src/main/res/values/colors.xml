@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#E84D17</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#8c2f0d</color>
     <color name="colorAccent">#E84D17</color>
     <color name="white">#FFFFFF</color>
     <color name="light_gray">#f2f2f2</color>
     <color name="orange">#E84D17</color>
+    <color name="skin">#ffe0cc</color>
+    <color name="black">#000000</color>
 </resources>
