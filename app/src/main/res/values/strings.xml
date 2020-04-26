@@ -4,12 +4,16 @@
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="logout">Logout</string>
+    <string name="apartment_info">Apartment Info</string>
 
     <string name="login_title">LoginActivity</string>
 
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="get_otp">Get OTP</string>
     <string name="no_account">No Account Yet? Sign Up</string>
+    <string name="enter_code">Please enter One Time Password (OTP)</string>
+    <string name="login">LogIn</string>
+    <string name="change_mobile">Edit Mobile No</string>
 
     <string name="confirm_password">Retype Password</string>
     <string name="sign_up">Sign Up</string>
@@ -31,4 +35,9 @@
     <string name="default_name">John Doe</string>
     <string name="default_mobile">9876543210</string>
     <string name="default_email">john.doe@gmail.com</string>
+
+    <string name="society">Society</string>
+    <string name="apartment">Apartment</string>
+    <string name="flat">Flat</string>
+    <string name="save">Save</string>
 </resources>

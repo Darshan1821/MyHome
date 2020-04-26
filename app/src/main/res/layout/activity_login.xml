@@ -21,46 +21,36 @@
             android:contentDescription="Home"
             android:src="@drawable/home" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="1">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <Spinner
+                android:id="@+id/countries"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35" />
+
+            <EditText
                 android:id="@+id/mobile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/mobile"
+                android:layout_weight="0.65"
                 android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/password"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login"
+            android:id="@+id/get_otp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@color/orange"
-            android:text="@string/login"
+            android:text="@string/get_otp"
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/no_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/no_account"
-            android:textAlignment="center" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

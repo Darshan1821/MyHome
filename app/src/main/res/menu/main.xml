@@ -13,13 +13,18 @@
         android:title=""
         app:showAsAction="always" />
     <item
-        android:id="@+id/about"
+        android:id="@+id/apartment_info"
         android:orderInCategory="300"
+        android:title="@string/apartment_info"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="400"
         android:title="@string/about"
         app:showAsAction="never" />
     <item
         android:id="@+id/logout"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         android:title="@string/logout"
         app:showAsAction="never" />
 </menu>

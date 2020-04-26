@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.VerifyMobileActivity"
+    android:padding="25dp"
+    android:background="@color/light_gray">
+
+    <TextView
+        android:id="@+id/code_text"
+        android:text="@string/enter_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_above="@+id/code"
+        android:padding="5dp"/>
+
+    <EditText
+        android:id="@+id/code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:inputType="number"
+        android:layout_marginTop="5dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/log_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/orange"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:layout_below="@+id/code"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/change_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/orange"
+        android:text="@string/change_mobile"
+        android:textColor="@color/white"
+        android:layout_below="@+id/log_in"/>
+</RelativeLayout>

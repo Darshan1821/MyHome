@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/profilePic"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:layout_marginStart="85dp"
         android:layout_marginTop="40dp"
         android:contentDescription="@string/profile"
@@ -27,7 +27,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             app:cardBackgroundColor="@color/skin"
             app:cardCornerRadius="8dp"
             app:cardElevation="3dp">
@@ -132,7 +132,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             app:cardBackgroundColor="@color/skin"
             app:cardCornerRadius="8dp"
             app:cardElevation="3dp">

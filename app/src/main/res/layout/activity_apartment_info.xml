@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ApartmentInfoActivity"
+    android:padding="25dp"
+    android:background="@color/light_gray">
+
+    <TextView
+        android:id="@+id/societyLabel"
+        android:text="@string/society"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/societies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/societyLabel"/>
+
+    <TextView
+        android:id="@+id/apartmentLabel"
+        android:text="@string/apartment"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:layout_below="@+id/societies"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/apartments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/apartmentLabel"/>
+
+    <TextView
+        android:id="@+id/flatLabel"
+        android:text="@string/flat"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:layout_below="@+id/apartments"
+        android:layout_marginTop="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/flats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/flatLabel"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/save_apartment_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:layout_below="@+id/flats"
+        android:background="@color/orange"
+        android:textColor="@color/white"
+        android:layout_marginTop="25dp"/>
+</RelativeLayout>
