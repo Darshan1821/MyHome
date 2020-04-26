@@ -25,8 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-
 public class MainActivity extends AppCompatActivity {
 
     private CardView maintenance;
@@ -64,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
                         Intent meetingIntent = new Intent(MainActivity.this, MeetingActivity.class);
-                        HashMap<String,String> apartmentMap = (HashMap<String, String>) dataSnapshot.getValue();
-                        meetingIntent.putExtra("societyName", apartmentMap.get("societyName"));
+                        ApartmentInfo apartmentInfo = dataSnapshot.getValue(ApartmentInfo.class);
+                        meetingIntent.putExtra("societyName", apartmentInfo.getSocietyName());
                         startActivity(meetingIntent);
                     } else {
                         Toast.makeText(getApplicationContext(), "Save Apartment Info !", Toast.LENGTH_LONG).show();
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
                 }
             });
         });

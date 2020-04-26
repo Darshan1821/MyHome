@@ -46,6 +46,9 @@
         <activity
             android:name=".ApartmentInfoActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AddMeetingActivity"
+            android:parentActivityName=".MeetingActivity" />
     </application>
 
 </manifest>

@@ -1,15 +1,15 @@
 package com.dexter.myhome;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatSpinner;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.dexter.myhome.model.ApartmentInfo;
 import com.dexter.myhome.util.AppConstants;
@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class ApartmentInfoActivity extends AppCompatActivity {
 
@@ -128,10 +127,10 @@ public class ApartmentInfoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    HashMap<String,String> apartmentInfo = (HashMap<String, String>) dataSnapshot.getValue();
-                    societies.setSelection(Arrays.asList(AppConstants.SOCITIES).indexOf(apartmentInfo.get("societyName")));
-                    apartments.setSelection(Arrays.asList(AppConstants.APARTMENTS).indexOf(apartmentInfo.get("apartmentName")));
-                    flats.setSelection(Arrays.asList(AppConstants.FLATS).indexOf(apartmentInfo.get("flatName")));
+                    ApartmentInfo apartmentInfo = dataSnapshot.getValue(ApartmentInfo.class);
+                    societies.setSelection(Arrays.asList(AppConstants.SOCITIES).indexOf(apartmentInfo.getSocietyName()));
+                    apartments.setSelection(Arrays.asList(AppConstants.APARTMENTS).indexOf(apartmentInfo.getApartmentName()));
+                    flats.setSelection(Arrays.asList(AppConstants.FLATS).indexOf(apartmentInfo.getFlatName()));
                 }
             }
 

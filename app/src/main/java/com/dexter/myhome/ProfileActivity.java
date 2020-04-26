@@ -2,7 +2,6 @@ package com.dexter.myhome;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -19,8 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -72,11 +69,11 @@ public class ProfileActivity extends AppCompatActivity {
         profileReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                HashMap<String, String> profile = (HashMap<String, String>) dataSnapshot.getValue();
-                name.setText(profile.get("name"));
-                mobile.setText(profile.get("mobile"));
-                email.setText(profile.get("email"));
-                if(profile.get("gender").equals("Male")) {
+                Profile profile = dataSnapshot.getValue(Profile.class);
+                name.setText(profile.getName());
+                mobile.setText(profile.getMobile());
+                email.setText(profile.getEmail());
+                if (profile.getGender().equals("Male")) {
                     gender.getChildAt(0).setSelected(Boolean.TRUE);
                 } else {
                     gender.getChildAt(1).setSelected(Boolean.TRUE);
