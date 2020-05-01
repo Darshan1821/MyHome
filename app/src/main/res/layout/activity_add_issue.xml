@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray"
     android:padding="25dp"
-    tools:context=".meeting.AddMeetingActivity">
+    tools:context=".issue.AddIssueActivity">
 
     <TextView
         android:id="@+id/titleLabel"
@@ -19,7 +19,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/meeting_title"
+        android:id="@+id/issue_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleLabel" />
@@ -28,7 +28,7 @@
         android:id="@+id/descriptionLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/meeting_title"
+        android:layout_below="@+id/issue_title"
         android:layout_marginTop="15dp"
         android:padding="5dp"
         android:text="@string/description"
@@ -37,54 +37,18 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/meeting_description"
+        android:id="@+id/issue_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/descriptionLabel" />
 
-    <TextView
-        android:id="@+id/dateLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meeting_description"
-        android:layout_marginTop="15dp"
-        android:padding="5dp"
-        android:text="@string/meeting_date"
-        android:textColor="@color/orange"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/dateLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dateLabel"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/meeting_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.80"
-            android:padding="5dp"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/select_meeting_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:src="@drawable/baseline_date_range_black_36" />
-    </LinearLayout>
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_meeting"
+        android:id="@+id/add_issue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dateLayout"
+        android:layout_below="@+id/issue_description"
         android:layout_marginTop="25dp"
         android:background="@color/orange"
-        android:text="@string/add_meeting"
+        android:text="@string/add_issue"
         android:textColor="@color/white" />
 </RelativeLayout>

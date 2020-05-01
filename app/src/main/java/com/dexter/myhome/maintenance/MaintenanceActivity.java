@@ -1,8 +1,10 @@
-package com.dexter.myhome;
+package com.dexter.myhome.maintenance;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.dexter.myhome.R;
 
 public class MaintenanceActivity extends AppCompatActivity {
 

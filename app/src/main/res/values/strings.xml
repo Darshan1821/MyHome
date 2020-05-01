@@ -26,7 +26,7 @@
     <string name="maintenance">Maintenance</string>
     <string name="meetings">Meetings</string>
     <string name="events">Events</string>
-    <string name="society_issues">Society Issues</string>
+    <string name="society_issues">Issues</string>
 
     <string name="name">Name</string>
     <string name="mobile">Mobile</string>
@@ -43,11 +43,18 @@
     <string name="delete">DELETE</string>
     <string name="date">Date:</string>
     <string name="organizer">Organizer:</string>
+    <string name="raised_by">Raised By</string>
 
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="add_meeting">Add Meeting</string>
+    <string name="add_event">Add Event</string>
+    <string name="add_issue">Add Issue</string>
     <string name="meeting_date">Meeting Date</string>
+    <string name="event_date">Event Date</string>
     <string name="from_date">From Date</string>
     <string name="to_date">To Date</string>
+    <string name="no_meeting">No meetings found !</string>
+    <string name="no_event">No events found !</string>
+    <string name="no_issue">No Issue found !</string>
 </resources>

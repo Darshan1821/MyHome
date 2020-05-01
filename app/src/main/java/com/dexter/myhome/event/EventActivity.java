@@ -1,11 +1,13 @@
-package com.dexter.myhome;
+package com.dexter.myhome.event;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,8 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dexter.myhome.adapter.MeetingAdapter;
-import com.dexter.myhome.model.Meeting;
+import com.dexter.myhome.R;
+import com.dexter.myhome.adapter.EventAdapter;
+import com.dexter.myhome.model.Event;
 import com.dexter.myhome.model.Profile;
 import com.dexter.myhome.util.AppConstants;
 import com.dexter.myhome.util.DateUtil;
@@ -32,92 +35,96 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MeetingActivity extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity {
 
     private String societyName;
     private TextView society;
-    private RecyclerView meetingList;
+    private RecyclerView eventList;
     private Date fromDate;
     private Date toDate;
     private EditText fromDateView;
     private EditText toDateView;
     private ImageView fromDatePicker;
     private ImageView toDatePicker;
-    private DatabaseReference meetingReference;
-    private List<Meeting> meetings;
-    private RecyclerView.Adapter meetingAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private FloatingActionButton addSocietyMeeting;
+    private TextView noEvents;
     private DatabaseReference profileReference;
+    private List<Event> events;
+    private RecyclerView.Adapter eventAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private FloatingActionButton addSocietyEvent;
+    private DatabaseReference eventReference;
     private FirebaseAuth mAuth;
     private int year;
     private int month;
     private int day;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meeting);
+        setContentView(R.layout.activity_event);
 
-        getSupportActionBar().setTitle("Meetings");
+        getSupportActionBar().setTitle("Events");
 
         societyName = getIntent().getExtras().get("societyName").toString();
         society = findViewById(R.id.society);
         society.setText(societyName);
         fromDate = new Date();
         toDate = new Date();
-        meetings = new ArrayList<>();
-        addSocietyMeeting = findViewById(R.id.add_society_meeting);
+        events = new ArrayList<>();
+        addSocietyEvent = findViewById(R.id.add_society_event);
         mAuth = FirebaseAuth.getInstance();
         fromDateView = findViewById(R.id.selected_from_date);
         toDateView = findViewById(R.id.selected_to_date);
         fromDatePicker = findViewById(R.id.select_from_date);
         toDatePicker = findViewById(R.id.select_to_date);
+        noEvents = findViewById(R.id.no_event);
+        progress = findViewById(R.id.progress);
 
         fromDateView.setInputType(InputType.TYPE_NULL);
         toDateView.setInputType(InputType.TYPE_NULL);
 
         setDefaultDates();
 
-        meetingReference = FirebaseDatabase.getInstance().getReference("Societies")
-                .child(societyName).child("Meetings");
+        eventReference = FirebaseDatabase.getInstance().getReference("Societies")
+                .child(societyName).child("Events");
         profileReference = FirebaseDatabase.getInstance(AppConstants.FIREBASE_DB_URL).getReference("Users")
                 .child(mAuth.getCurrentUser().getUid()).child("Profile");
 
-        meetingList = findViewById(R.id.meetings);
-        meetingList.setHasFixedSize(Boolean.TRUE);
+        eventList = findViewById(R.id.events);
+        eventList.setHasFixedSize(Boolean.TRUE);
 
         layoutManager = new LinearLayoutManager(this);
 
-        meetingList.setLayoutManager(layoutManager);
+        eventList.setLayoutManager(layoutManager);
 
-        meetingAdapter = new MeetingAdapter(this, meetings);
-        meetingList.setAdapter(meetingAdapter);
+        eventAdapter = new EventAdapter(this, events);
+        eventList.setAdapter(eventAdapter);
 
-        fetchMeetingsByDate(fromDate, toDate);
+        fetchEventsByDate(fromDate, toDate);
 
-        meetingAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        eventAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeChanged(int positionStart, int itemCount) {
                 super.onItemRangeChanged(positionStart, itemCount);
-                meetingReference.removeValue();
-                meetings.forEach(m -> {
-                    meetingReference.push().setValue(m);
+                eventReference.removeValue();
+                events.forEach(e -> {
+                    eventReference.push().setValue(e);
                 });
             }
         });
 
-        addSocietyMeeting.setOnClickListener(v -> {
+        addSocietyEvent.setOnClickListener(v -> {
             profileReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         Profile profile = dataSnapshot.getValue(Profile.class);
                         if (profile.getName() != null && !profile.getName().isEmpty()) {
-                            Intent addMeetingIntent = new Intent(MeetingActivity.this, AddMeetingActivity.class);
-                            addMeetingIntent.putExtra("userName", profile.getName());
-                            addMeetingIntent.putExtra("societyName", societyName);
-                            startActivity(addMeetingIntent);
+                            Intent addEventIntent = new Intent(EventActivity.this, AddEventActivity.class);
+                            addEventIntent.putExtra("userName", profile.getName());
+                            addEventIntent.putExtra("societyName", societyName);
+                            startActivity(addEventIntent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Save Name in Profile !", Toast.LENGTH_LONG).show();
                         }
@@ -146,7 +153,7 @@ public class MeetingActivity extends AppCompatActivity {
                         cal.set(Calendar.MONTH, monthOfYear);
                         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         fromDate = cal.getTime();
-                        fetchMeetingsByDate(fromDate, toDate);
+                        fetchEventsByDate(fromDate, toDate);
                     }, year, month, day);
             datePickerDialog.show();
         });
@@ -164,7 +171,7 @@ public class MeetingActivity extends AppCompatActivity {
                         cal.set(Calendar.MONTH, monthOfYear);
                         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         toDate = cal.getTime();
-                        fetchMeetingsByDate(fromDate, toDate);
+                        fetchEventsByDate(fromDate, toDate);
                     }, year, month, day);
             datePickerDialog.show();
         });
@@ -180,27 +187,38 @@ public class MeetingActivity extends AppCompatActivity {
         toDateView.setText(day + "-" + (month + 1) + "-" + year);
     }
 
-    private void fetchMeetingsByDate(Date fromDate, Date toDate) {
-        meetingReference.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void fetchEventsByDate(Date fromDate, Date toDate) {
+        progress.setVisibility(View.VISIBLE);
+        events.clear();
+        eventReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        Meeting meeting = data.getValue(Meeting.class);
-                        if (DateUtil.isDateBetween(fromDate, toDate, meeting.getMeetingDate())) {
-                            meetings.add(meeting);
-                            meetingAdapter.notifyDataSetChanged();
+                        Event event = data.getValue(Event.class);
+                        if (DateUtil.isDateBetween(fromDate, toDate, event.getEventDate())) {
+                            events.add(event);
+                            eventAdapter.notifyDataSetChanged();
                         }
                     }
+                    if (events.isEmpty()) {
+                        noEvents.setVisibility(View.VISIBLE);
+                    } else {
+                        noEvents.setVisibility(View.INVISIBLE);
+                    }
                 }
+                if (events.isEmpty()) {
+                    noEvents.setVisibility(View.VISIBLE);
+                } else {
+                    noEvents.setVisibility(View.INVISIBLE);
+                }
+                progress.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                progress.setVisibility(View.INVISIBLE);
             }
         });
     }
-
-
 }

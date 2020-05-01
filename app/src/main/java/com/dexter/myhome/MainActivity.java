@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,11 +14,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.dexter.myhome.auth.LoginActivity;
+import com.dexter.myhome.event.EventActivity;
+import com.dexter.myhome.issue.IssueActivity;
+import com.dexter.myhome.maintenance.MaintenanceActivity;
+import com.dexter.myhome.meeting.MeetingActivity;
+import com.dexter.myhome.menu.ApartmentInfoActivity;
+import com.dexter.myhome.menu.ProfileActivity;
 import com.dexter.myhome.model.ApartmentInfo;
 import com.dexter.myhome.model.Country;
 import com.dexter.myhome.model.GsonRequest;
 import com.dexter.myhome.model.Profile;
 import com.dexter.myhome.util.AppConstants;
+import com.dexter.myhome.util.CommonUtil;
 import com.dexter.myhome.util.RequestHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference userReference;
     private String userID;
     private DatabaseReference apartmentInfoReference;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         meetings = findViewById(R.id.meetings);
         events = findViewById(R.id.events);
         societyIssues = findViewById(R.id.society_issues);
+        progress = findViewById(R.id.progress);
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
         userReference = FirebaseDatabase.getInstance(AppConstants.FIREBASE_DB_URL).getReference("Users");
@@ -57,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         maintenance.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MaintenanceActivity.class)));
 
         meetings.setOnClickListener(v -> {
+            progress.setVisibility(View.VISIBLE);
+            CommonUtil.setWindowNotClickable(getWindow());
             apartmentInfoReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -65,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
                         ApartmentInfo apartmentInfo = dataSnapshot.getValue(ApartmentInfo.class);
                         meetingIntent.putExtra("societyName", apartmentInfo.getSocietyName());
                         startActivity(meetingIntent);
+                        progress.setVisibility(View.INVISIBLE);
                     } else {
+                        progress.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(), "Save Apartment Info !", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -77,9 +92,55 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
-        events.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, EventActivity.class)));
+        events.setOnClickListener(v -> {
+            progress.setVisibility(View.VISIBLE);
+            CommonUtil.setWindowNotClickable(getWindow());
+            apartmentInfoReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Intent eventIntent = new Intent(MainActivity.this, EventActivity.class);
+                        ApartmentInfo apartmentInfo = dataSnapshot.getValue(ApartmentInfo.class);
+                        eventIntent.putExtra("societyName", apartmentInfo.getSocietyName());
+                        startActivity(eventIntent);
+                        progress.setVisibility(View.INVISIBLE);
+                    } else {
+                        progress.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getApplicationContext(), "Save Apartment Info !", Toast.LENGTH_LONG).show();
+                    }
+                }
 
-        societyIssues.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SocietyIssueActivity.class)));
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+                }
+            });
+        });
+
+        societyIssues.setOnClickListener(v -> {
+            progress.setVisibility(View.VISIBLE);
+            CommonUtil.setWindowNotClickable(getWindow());
+            apartmentInfoReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Intent issueIntent = new Intent(MainActivity.this, IssueActivity.class);
+                        ApartmentInfo apartmentInfo = dataSnapshot.getValue(ApartmentInfo.class);
+                        issueIntent.putExtra("societyName", apartmentInfo.getSocietyName());
+                        startActivity(issueIntent);
+                        progress.setVisibility(View.INVISIBLE);
+                    } else {
+                        progress.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getApplicationContext(), "Save Apartment Info !", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_LONG).show();
+                }
+            });
+        });
 
         userReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

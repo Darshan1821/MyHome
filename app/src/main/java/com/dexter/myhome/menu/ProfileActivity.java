@@ -1,4 +1,4 @@
-package com.dexter.myhome;
+package com.dexter.myhome.menu;
 
 import android.os.Bundle;
 import android.text.InputType;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dexter.myhome.R;
 import com.dexter.myhome.model.Profile;
 import com.dexter.myhome.util.AppConstants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -112,6 +113,6 @@ public class ProfileActivity extends AppCompatActivity {
         email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         gender.getChildAt(0).setEnabled(Boolean.TRUE);
         gender.getChildAt(1).setEnabled(Boolean.TRUE);
-        name.setFocusable(Boolean.TRUE);
+        name.requestFocus();
     }
 }

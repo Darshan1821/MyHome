@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".issue.AddIssueActivity"></activity>
+        <activity android:name=".event.AddEventActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -28,27 +30,27 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".menu.ProfileActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".SocietyIssueActivity"
+            android:name=".issue.IssueActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".EventActivity"
+            android:name=".event.EventActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MeetingActivity"
+            android:name=".meeting.MeetingActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MaintenanceActivity"
+            android:name=".maintenance.MaintenanceActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".auth.VerifyMobileActivity" />
         <activity
-            android:name=".ApartmentInfoActivity"
+            android:name=".menu.ApartmentInfoActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AddMeetingActivity"
-            android:parentActivityName=".MeetingActivity" />
+            android:name=".meeting.AddMeetingActivity"
+            android:parentActivityName=".meeting.MeetingActivity" />
     </application>
 
 </manifest>

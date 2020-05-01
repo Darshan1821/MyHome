@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeetingActivity"
+    tools:context=".meeting.MeetingActivity"
     android:padding="25dp">
 
     <LinearLayout
@@ -121,6 +121,18 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/society_meetings" />
 
+    <TextView
+        android:id="@+id/no_meeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/society_meetings"
+        android:background="@color/skin"
+        android:paddingTop="200dp"
+        android:paddingBottom="200dp"
+        android:text="@string/no_meeting"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_society_meeting"
         android:layout_width="wrap_content"
@@ -130,4 +142,18 @@
         android:layout_margin="15dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:src="@drawable/baseline_add_white_36" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@android:style/Widget.Material.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="150dp"
+        android:background="@color/light_gray"
+        android:indeterminate="true"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+        android:visibility="invisible" />
 </RelativeLayout>

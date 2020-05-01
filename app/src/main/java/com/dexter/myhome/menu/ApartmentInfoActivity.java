@@ -1,4 +1,4 @@
-package com.dexter.myhome;
+package com.dexter.myhome.menu;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import com.dexter.myhome.R;
 import com.dexter.myhome.model.ApartmentInfo;
 import com.dexter.myhome.util.AppConstants;
 import com.google.firebase.auth.FirebaseAuth;

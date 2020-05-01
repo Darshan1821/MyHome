@@ -12,51 +12,51 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dexter.myhome.R;
-import com.dexter.myhome.model.Meeting;
+import com.dexter.myhome.model.Issue;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder> {
+public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> {
 
     private Context context;
-    private List<Meeting> meetings;
+    private List<Issue> issues;
 
-    public MeetingAdapter(Context context, List<Meeting> meetings) {
+    public IssueAdapter(Context context, List<Issue> issues) {
         this.context = context;
-        this.meetings = meetings;
+        this.issues = issues;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.meeting_row, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.issue_row, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.itemView.setTag(meetings.get(position));
+        holder.itemView.setTag(issues.get(position));
 
-        Meeting meeting = meetings.get(position);
+        Issue issue = issues.get(position);
 
-        holder.title.setText(meeting.getTitle());
-        holder.description.setText(meeting.getDescription());
-        holder.date.setText(new SimpleDateFormat("dd-MM-yyyy").format(meeting.getMeetingDate()));
-        holder.organizer.setText(meeting.getOrganizer());
+        holder.title.setText(issue.getTitle());
+        holder.description.setText(issue.getDescription());
+        holder.date.setText(new SimpleDateFormat("dd-MM-yyyy").format(issue.getIssueDate()));
+        holder.raisedBy.setText(issue.getRaisedBy());
     }
 
     @Override
     public int getItemCount() {
-        return meetings.size();
+        return issues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView description;
         public TextView date;
-        public TextView organizer;
+        public TextView raisedBy;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -64,17 +64,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
             date = itemView.findViewById(R.id.date);
-            organizer = itemView.findViewById(R.id.organizer);
+            raisedBy = itemView.findViewById(R.id.raised_by);
 
             itemView.setOnLongClickListener(v -> {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(itemView.getContext());
-                alertDialogBuilder.setMessage("Are you sure you want to delete the meeting?");
+                alertDialogBuilder.setMessage("Are you sure you want to delete the issue?");
                 alertDialogBuilder.setPositiveButton("Yes", (arg0, arg1) -> {
                     int position = getAdapterPosition();
-                    meetings.remove(position);
+                    issues.remove(position);
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, meetings.size());
-                    Toast.makeText(itemView.getContext(), "Meeting Deleted !", Toast.LENGTH_LONG).show();
+                    notifyItemRangeChanged(position, issues.size());
+                    Toast.makeText(itemView.getContext(), "Issue Deleted !", Toast.LENGTH_LONG).show();
                 });
                 alertDialogBuilder.setNegativeButton("No", (dialog, which) -> {
                 });

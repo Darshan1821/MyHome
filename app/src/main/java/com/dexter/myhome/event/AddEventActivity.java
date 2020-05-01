@@ -1,8 +1,9 @@
-package com.dexter.myhome;
+package com.dexter.myhome.event;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,14 +12,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.dexter.myhome.model.Meeting;
+import com.dexter.myhome.R;
+import com.dexter.myhome.model.Event;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddMeetingActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
 
     private EditText title;
     private EditText description;
@@ -28,21 +30,21 @@ public class AddMeetingActivity extends AppCompatActivity {
     private int month;
     private int day;
     private Date dateVal;
-    private AppCompatButton addMeeting;
+    private AppCompatButton addEvent;
     private String userName;
     private String societyName;
-    private DatabaseReference meetingReference;
+    private DatabaseReference eventReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_meeting);
+        setContentView(R.layout.activity_add_event);
 
         getSupportActionBar().setTitle("Add Meeting");
 
-        title = findViewById(R.id.meeting_title);
-        description = findViewById(R.id.meeting_description);
-        date = findViewById(R.id.meeting_date);
+        title = findViewById(R.id.event_title);
+        description = findViewById(R.id.event_description);
+        date = findViewById(R.id.event_date);
         dateVal = new Date();
 
         setDefaultDate();
@@ -50,11 +52,11 @@ public class AddMeetingActivity extends AppCompatActivity {
         userName = getIntent().getExtras().get("userName").toString();
         societyName = getIntent().getExtras().get("societyName").toString();
 
-        meetingReference = FirebaseDatabase.getInstance().getReference("Societies")
-                .child(societyName).child("Meetings");
+        eventReference = FirebaseDatabase.getInstance().getReference("Societies")
+                .child(societyName).child("Events");
 
-        selectDate = findViewById(R.id.select_meeting_date);
-        addMeeting = findViewById(R.id.add_meeting);
+        selectDate = findViewById(R.id.select_event_date);
+        addEvent = findViewById(R.id.add_event);
 
         selectDate.setOnClickListener(v -> {
             Calendar cal = Calendar.getInstance();
@@ -73,16 +75,29 @@ public class AddMeetingActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        addMeeting.setOnClickListener(v -> {
-            Meeting meeting = new Meeting();
+        addEvent.setOnClickListener(v -> {
+
+            if (TextUtils.isEmpty(title.getText().toString())) {
+                title.setError("Enter Title !");
+                title.requestFocus();
+                return;
+            }
+
+            if (TextUtils.isEmpty(description.getText().toString())) {
+                description.setError("Enter Description !");
+                description.requestFocus();
+                return;
+            }
+
+            Event meeting = new Event();
             meeting.setTitle(title.getText().toString());
             meeting.setDescription(description.getText().toString());
-            meeting.setMeetingDate(dateVal);
+            meeting.setEventDate(dateVal);
             meeting.setOrganizer(userName);
-            meetingReference.push().setValue(meeting);
-            Toast.makeText(getApplicationContext(), "Meeting Added !", Toast.LENGTH_LONG).show();
+            eventReference.push().setValue(meeting);
+            Toast.makeText(getApplicationContext(), "Event Added !", Toast.LENGTH_LONG).show();
 
-            Intent meetingIntent = new Intent(AddMeetingActivity.this, MeetingActivity.class);
+            Intent meetingIntent = new Intent(AddEventActivity.this, EventActivity.class);
             meetingIntent.putExtra("societyName", societyName);
             startActivity(meetingIntent);
             finish();
@@ -97,4 +112,5 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         date.setText(day + "-" + (month + 1) + "-" + year);
     }
+
 }
