@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':surveymonkey_android_sdk'
 rootProject.name='MyHome'

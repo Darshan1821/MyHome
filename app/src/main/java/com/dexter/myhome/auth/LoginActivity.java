@@ -10,19 +10,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.dexter.myhome.MainActivity;
 import com.dexter.myhome.R;
+import com.dexter.myhome.admin.AdminActivity;
 import com.dexter.myhome.model.Country;
 import com.dexter.myhome.util.AppConstants;
+import com.dexter.myhome.util.CommonUtil;
 import com.dexter.myhome.util.ToastUtil;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     private Country[] countries;
     private int countrySelected = AppConstants.DEFAULT_COUNTRY_SELECTION;
     private FirebaseAuth mAuth;
+    private DatabaseReference userReference;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         countriesDropdown = findViewById(R.id.countries);
         countries = (Country[]) getIntent().getExtras().get("countries");
         mAuth = FirebaseAuth.getInstance();
+        userReference = FirebaseDatabase.getInstance(AppConstants.FIREBASE_DB_URL).getReference("Users");
+        progress = findViewById(R.id.progress);
 
         generateCountryCodes(countries);
         countriesDropdown.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countryNames));
@@ -108,12 +123,35 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         if(mAuth.getCurrentUser() != null){
-            Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(mainActivityIntent);
+            progress.setVisibility(View.VISIBLE);
+            CommonUtil.setWindowNotClickable(getWindow());
+            userReference.child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Map<String, Object> userMap = (Map<String, Object>) dataSnapshot.getValue();
+                        Map<String, Object> profileMap = (Map<String, Object>) userMap.get("Profile");
+                        Boolean isAdmin = (Boolean) profileMap.get("admin");
+                        if (!isAdmin) {
+                            Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(mainActivityIntent);
+                        } else {
+                            Intent adminActivityIntent = new Intent(LoginActivity.this, AdminActivity.class);
+                            startActivity(adminActivityIntent);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No User Found!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    progress.setVisibility(View.INVISIBLE);
+                    CommonUtil.setWindowClickable(getWindow());
+                }
+            });
         }
     }
-
 
 }

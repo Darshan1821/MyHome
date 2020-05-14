@@ -30,6 +30,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Boolean editMode = Boolean.FALSE;
     private FirebaseAuth mAuth;
     private DatabaseReference profileReference;
+    private Boolean isAdmin;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,8 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
                     gender.getChildAt(1).setSelected(Boolean.TRUE);
                 }
+                isAdmin = profile.getAdmin();
+                userId = profile.getUserId();
             }
 
             @Override
@@ -93,6 +97,8 @@ public class ProfileActivity extends AppCompatActivity {
         profile.setName(name.getText().toString());
         profile.setMobile(mAuth.getCurrentUser().getPhoneNumber());
         profile.setEmail(email.getText().toString());
+        profile.setAdmin(isAdmin);
+        profile.setUserId(userId);
         String genderVal = gender.getCheckedRadioButtonId() == R.id.male ? "Male" : "Female";
         profile.setGender(genderVal);
         profileReference.setValue(profile);

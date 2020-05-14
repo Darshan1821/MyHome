@@ -40,7 +40,7 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-        getSupportActionBar().setTitle("Add Meeting");
+        getSupportActionBar().setTitle("Add Event");
 
         title = findViewById(R.id.event_title);
         description = findViewById(R.id.event_description);

@@ -23,8 +23,13 @@
         android:title="@string/about"
         app:showAsAction="never" />
     <item
-        android:id="@+id/logout"
+        android:id="@+id/feedback"
         android:orderInCategory="500"
+        android:title="@string/feedback"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="600"
         android:title="@string/logout"
         app:showAsAction="never" />
 </menu>

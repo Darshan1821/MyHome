@@ -6,8 +6,11 @@ public class Profile {
     private String mobile;
     private String email;
     private String gender;
+    private Boolean isAdmin;
+    private String userId;
 
-    public Profile(){}
+    public Profile() {
+    }
 
     public String getName() {
         return name;
@@ -39,5 +42,21 @@ public class Profile {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

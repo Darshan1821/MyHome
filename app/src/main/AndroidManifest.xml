@@ -11,8 +11,6 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".issue.AddIssueActivity"></activity>
-        <activity android:name=".event.AddEventActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -51,6 +49,21 @@
         <activity
             android:name=".meeting.AddMeetingActivity"
             android:parentActivityName=".meeting.MeetingActivity" />
+        <activity
+            android:name=".issue.AddIssueActivity"
+            android:parentActivityName=".issue.IssueActivity" />
+        <activity
+            android:name=".event.AddEventActivity"
+            android:parentActivityName=".event.EventActivity" />
+        <activity
+            android:name=".admin.AdminActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".admin.AddMaintenance"
+            android:parentActivityName=".admin.AdminActivity" />
+        <activity
+            android:name=".menu.AboutActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

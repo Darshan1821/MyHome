@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Home</string>
     <string name="profile">Profile</string>
+    <string name="feedback">Feedback</string>
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="logout">Logout</string>
@@ -24,6 +25,9 @@
     <string name="female">Female</string>
 
     <string name="maintenance">Maintenance</string>
+    <string name="maintenance_heading">Maintenance:</string>
+    <string name="add_maintenance">Add Maintenance</string>
+    <string name="pay_maintenance">Pay Maintenance</string>
     <string name="meetings">Meetings</string>
     <string name="events">Events</string>
     <string name="society_issues">Issues</string>
@@ -39,7 +43,9 @@
     <string name="society">Society</string>
     <string name="apartment">Apartment</string>
     <string name="flat">Flat</string>
+    <string name="month">Month</string>
     <string name="save">Save</string>
+    <string name="get_tenants">Get Tenants</string>
     <string name="delete">DELETE</string>
     <string name="date">Date:</string>
     <string name="organizer">Organizer:</string>
@@ -57,4 +63,9 @@
     <string name="no_meeting">No meetings found !</string>
     <string name="no_event">No events found !</string>
     <string name="no_issue">No Issue found !</string>
+
+    <string name="drashti">Drashti Bangoria</string>
+    <string name="avani">Avani Vanpariya</string>
+    <string name="shyam">Shyam Kaila</string>
+    <string name="harsh">Harsh Chudasama</string>
 </resources>
